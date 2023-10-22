@@ -1,0 +1,11 @@
+MANIFEST.in
+README.md
+setup.py
+For_clean_folder.egg-info/PKG-INFO
+For_clean_folder.egg-info/SOURCES.txt
+For_clean_folder.egg-info/dependency_links.txt
+For_clean_folder.egg-info/entry_points.txt
+For_clean_folder.egg-info/top_level.txt
+clean_folder/__init__.py
+clean_folder/normalize.py
+clean_folder/sort.py
