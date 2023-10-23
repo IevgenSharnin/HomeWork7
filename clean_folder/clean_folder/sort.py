@@ -14,9 +14,11 @@ DICT_FOR_EXT = {'archives': ['ZIP', 'GZ', 'TAR'],
 #while True:
 #    try:
 PATH = Path(sys.argv [1])
+#path_from_command_line = PATH
 #        break
 #    except IndexError:
-#        PATH = input ('Треба ввести путь до папки, яку хочете відсортувати': )
+#        input ('Треба ввести путь до папки, яку хочете відсортувати: ')
+#        PATH = Path(sys.argv [0])
 
 all_files = []
 suff_used_known = set ()
@@ -100,21 +102,21 @@ def run ():
     print (f'Знайдено наступні відомі типи файлів: {suff_used_known}')
     print (f'Знайдено наступні невідомі типи файлів ("Інші типи"): {suff_used_unknown}')
     print ('')
-    yn = input ('Продовжити виконання завдання: перейменування файлів за \
-допомогою транслітерації та їх переміщення у папки за типами \
-(y - yes / n - no): ')
-    print ('')
-    while True:
-        if yn not in 'yn':
-            yn = input("Будь ласка, введіть 'y' або 'n': ") 
-        else: break
-    if yn == 'n':
-        print ('Дякую за увагу!\n')
-    else:
-        work_with_directories (PATH, 'new') # створюємо цільові папки
-        sorting (PATH, action = True) # нормалізуємо та переміщуємо файли
-        work_with_directories (PATH, 'del') # видаляємо усі пусті папки
-        print ('Імена файлів нормалізовані. Файли перемещені у\
+#    yn = input ('Продовжити виконання завдання: перейменування файлів за \
+#допомогою транслітерації та їх переміщення у папки за типами \
+#(y - yes / n - no): ')
+#    print ('')
+#    while True:
+#        if yn not in 'yn':
+#            yn = input("Будь ласка, введіть 'y' або 'n': ") 
+#        else: break
+#    if yn == 'n':
+#        print ('Дякую за увагу!\n')
+#    else:
+    work_with_directories (PATH, 'new') # створюємо цільові папки
+    sorting (PATH, action = True) # нормалізуємо та переміщуємо файли
+    work_with_directories (PATH, 'del') # видаляємо усі пусті папки
+    print ('Імена файлів нормалізовані. Файли перемещені у\
  відповідні папки.\n')
 # власне запуск
 #    run()
