@@ -43,7 +43,7 @@ def work_with_directories (path_: Path, action):
     if action == 'new':
         for dir in path_.iterdir(): #ім'я папки нормалізую
             if dir.is_dir():
-                dir.replace (PATH / normalize (dir.name))
+                dir.replace (PATH / dir.name)
         for dir_ in DICT_FOR_EXT.keys(): #створюю папки, якщо немає
             path_new_dir = path_ / dir_
             path_new_dir.mkdir (exist_ok = True, parents = True)
