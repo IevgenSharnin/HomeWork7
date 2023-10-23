@@ -2,6 +2,7 @@ import sys
 import shutil
 from pathlib import Path
 from clean_folder import normalize
+
 # словник з розширеннями файлів, що оброблюються
 DICT_FOR_EXT = {'archives': ['ZIP', 'GZ', 'TAR'],
                   'video': ['AVI', 'MP4', 'MOV', 'MKV'],
@@ -14,11 +15,11 @@ DICT_FOR_EXT = {'archives': ['ZIP', 'GZ', 'TAR'],
 #while True:
 #    try:
 PATH = Path(sys.argv [1])
-#path_from_command_line = PATH
 #        break
 #    except IndexError:
 #        input ('Треба ввести путь до папки, яку хочете відсортувати: ')
 #        PATH = Path(sys.argv [0])
+#        break
 
 all_files = []
 suff_used_known = set ()
@@ -40,10 +41,11 @@ def filetype (suffix):
 # працює, якщо відповідаємо 'у' після першого прогону
 # action 'new' створює, action 'del' удаляє 
 def work_with_directories (path_: Path, action):
+    from clean_folder import normalize
     if action == 'new':
         for dir in path_.iterdir(): #ім'я папки нормалізую
             if dir.is_dir():
-                dir.replace (PATH / dir.name)
+                dir.replace (PATH / normalize (dir.name))
         for dir_ in DICT_FOR_EXT.keys(): #створюю папки, якщо немає
             path_new_dir = path_ / dir_
             path_new_dir.mkdir (exist_ok = True, parents = True)
@@ -60,6 +62,7 @@ def work_with_directories (path_: Path, action):
 # з нормалізацією та переміщенням
 # перший прогон - тільки для інформації скільки і чого є 
 def sorting (path_, action = False):
+    from clean_folder import normalize
     for file in path_.iterdir(): #ім'я файлу з розширенням
         if file.is_dir():
             if action:
@@ -102,21 +105,22 @@ def run ():
     print (f'Знайдено наступні відомі типи файлів: {suff_used_known}')
     print (f'Знайдено наступні невідомі типи файлів ("Інші типи"): {suff_used_unknown}')
     print ('')
-#    yn = input ('Продовжити виконання завдання: перейменування файлів за \
-#допомогою транслітерації та їх переміщення у папки за типами \
-#(y - yes / n - no): ')
-#    print ('')
-#    while True:
-#        if yn not in 'yn':
-#            yn = input("Будь ласка, введіть 'y' або 'n': ") 
-#        else: break
-#    if yn == 'n':
-#        print ('Дякую за увагу!\n')
-#    else:
-    work_with_directories (PATH, 'new') # створюємо цільові папки
-    sorting (PATH, action = True) # нормалізуємо та переміщуємо файли
-    work_with_directories (PATH, 'del') # видаляємо усі пусті папки
-    print ('Імена файлів нормалізовані. Файли перемещені у\
+    yn = input ('Продовжити виконання завдання: перейменування файлів за \
+допомогою транслітерації та їх переміщення у папки за типами \
+(y - yes / n - no): ')
+    print ('')
+    while True:
+        if yn not in 'yn':
+            yn = input("Будь ласка, введіть 'y' або 'n': ") 
+        else: break
+    if yn == 'n':
+        print ('Дякую за увагу!\n')
+    else:
+        work_with_directories (PATH, 'new') # створюємо цільові папки
+        sorting (PATH, action = True) # нормалізуємо та переміщуємо файли
+        work_with_directories (PATH, 'del') # видаляємо усі пусті папки
+        print ('Імена файлів нормалізовані. Файли перемещені у\
  відповідні папки.\n')
 # власне запуск
-#    run()
+if __name__ == '__main__':
+    run()
